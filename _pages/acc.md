@@ -1,1493 +1,1632 @@
 ---
 layout: splash
 permalink: /
-title: ""          # quita el título
-search: false      # desactiva la barra de búsqueda
+title: ""          
+search: false      
 ---
+
+<div class="booth-title">
+
+<h1>
+UK Universities<br>
+at SC Conference
+</h1>
+
+<p>
+Explore postgraduate opportunities in HPC, AI and Digital Research
+</p>
+
+</div>
+
+<div class="interactive-layout">
+
+
+
+    <div class="uk-map-container">
+
+    <div class="map-glow"></div>
+
+        <img
+            src='/assets/images/map-uk-watercolour.png'
+            alt="Map of UK universities"
+            class="uk-map">
+
+         <!-- Durham -->
+    <button class="marker"
+            style="top:41%; left:70.5%;"
+            data-uni="durham">
+    </button>
+
+    <!-- Belfast -->
+    <button class="marker"
+            style="top:43%; left:42.5%;"
+            data-uni="belfast">
+    </button>
+
+    <!-- Leeds -->
+    <button class="marker"
+            style="top:49%; left:70.95%;"
+            data-uni="leeds">
+    </button>
+
+    <!-- Sheffield -->
+    <button class="marker"
+            style="top:53%; left:71.4%;"
+            data-uni="sheffield">
+    </button>
+
+    <!-- Manchester -->
+    <button class="marker"
+            style="top:52%; left:67%;"
+            data-uni="manchester">
+    </button>
+
+    <!-- Birmingham -->
+    <button class="marker"
+            style="top:60.3%; left:69%;"
+            data-uni="birmingham">
+    </button>
+
+    <!-- Cardiff -->
+    <button class="marker"
+            style="top:68.5%; left:61.4%;"
+            data-uni="cardiff">
+    </button>
+
+    <!-- Oxford -->
+    <button class="marker"
+            style="top:65.8%; left:73.9%;"
+            data-uni="oxford">
+    </button>
+
+    <!-- UCL -->
+    <button class="marker"
+            style="top:67%; left:83%;"
+            data-uni="ucl">
+    </button>
+
+    <!-- Imperial -->
+    <button class="marker"
+            style="top:68%; left:80%;"
+            data-uni="imperial">
+    </button>
+
+    <!-- Queen Mary -->
+    <button class="marker"
+            style="top:69%; left:82.5%;"
+            data-uni="qmul">
+    </button>
+
+    </div>
+
+
+    
+
+
+
+   
+
+</div>
+
+<!-- ===================================================== -->
+
+<div id="uni-modal" class="uni-modal">
+
+<div class="uni-modal-card">
+
+    <button id="close-modal" class="close-button">×</button>
+
+
+    <div class="city-panel">
+
+        <img id="city-image"
+             src=""
+             alt="University city">
+
+    </div>
+
+
+    <div class="uni-content">
+
+
+        <div class="uni-header">
+
+            <img id="uni-logo"
+                 class="uni-logo">
+
+            <div>
+
+                <h2 id="uni-name"></h2>
+
+                <p id="uni-location"></p>
+
+            </div>
+
+        </div>
+
+
+        <div class="programme-banner">
+
+            <h3 id="programme-name"></h3>
+
+            <span id="programme-type"></span>
+
+        </div>
+
+
+        <p id="uni-description"></p>
+
+
+        <div class="info-grid">
+
+            <div class="info-card">
+                <span class="label">Duration</span>
+                <span id="programme-duration"></span>
+            </div>
+
+            <div class="info-card">
+                <span class="label">Mode</span>
+                <span id="programme-mode"></span>
+            </div>
+
+            <div class="info-card">
+                <span class="label">Start</span>
+                <span id="programme-start"></span>
+            </div>
+
+            <div class="info-card">
+                <span class="label">Russell Group</span>
+                <span id="uni-russell"></span>
+            </div>
+
+        </div>
+
+
+        <div class="button-row">
+
+            <a id="programme-link"
+               class="primary-button">
+               View Master's
+            </a>
+
+            <a id="uni-link"
+               class="secondary-button">
+               University website
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
 
 
 
 <style>
 
-:root {
-  --bg: #042f39; /* page background */
-  --purple: #6c2a68; /* header/panel */
-  --cyan: #0C5D79; /* boxes */
-  --box-stroke: #ffffff;
-  --panel-dark: #4b1f45;
-  --muted: #cfc8b5;
-  --light: #ffffff;
-  --pink: #6c2a68;
+.map-glow{
+    position:absolute;
+    inset:10%;
+    background:#ffffff;
+    filter:blur(50px);
+    z-index:-1;
 }
-
-
+/* ==========================================================
+   GLOBAL BOOTH DESIGN
+   ========================================================== */
 
 body {
-  background: var(--bg);
-  color: var(--light);
+
+    background:
+    radial-gradient(circle at top left, #eef7ff, transparent 35%),
+    radial-gradient(circle at bottom right, #f8eaff, transparent 35%),
+    #ffffff;
+
 }
 
 
-.graph-grid {
-  display: grid;
-  position: relative;
+/* ==========================================================
+   TITLE
+   ========================================================== */
 
-  margin-top: 1rem;
- row-gap: 30px !important;   
-column-gap: 10px; 
+.booth-title {
 
+    text-align:center;
 
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, minmax(180px, auto));
+    margin:1.5rem auto 0;
 
-  grid-template-areas:
-    "von caches . vector roofline ."
-    ". machine gpu . strong weak"
-    ". . mpi shared . ."
-    ". . . . . ."
-    ". . . . . .";
+    max-width:900px;
 
-  justify-items: center;
-  align-items: center;
 }
 
 
+.booth-title h1 {
 
+    margin:0;
 
-.card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: 1px;
-}
+    font-size:3rem;
 
+    font-weight:800;
 
-.card-content:hoover{
-background: #064756;      
-  transform: translateY(-2px);  
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4); 
-  filter: brightness(1.1);  
+    line-height:1.1;
 
+    color:#002248;
+
 }
+
+
+.booth-title p {
 
-.arch-card {
-  position: relative;
-  width: 150px;
-  height: 200px;
-  margin: 0 auto;
-  background: var(--cyan);
-  
-  border-radius: 22px;
-  border: 4px solid var(--box-stroke);
-  
-  
-  cursor: pointer;
+    margin-top:1rem;
 
-  display: flex;
-  flex-direction: column;
+    font-size:1.2rem;
+
+    color:#555;
+
 }
 
 
 
-.arch-logos {
-  width: 200px;
-  height: 150px;
+/* ==========================================================
+   MAIN LAYOUT
+   ========================================================== */
 
-  border-radius: 24px;
 
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 18px;
+.interactive-layout {
 
-  padding: 24px 22px;
-  cursor: default;
-}
 
 
-.pos-cc                 { grid-row: 1; grid-column: 6; }
-.pos-von-neumann        { grid-row: 1; grid-column: 1; }
-.pos-caches             { grid-row: 1; grid-column: 2; }
-.pos-machine-arch       { grid-row: 2; grid-column: 2; }
-.pos-gpu                { grid-row: 2; grid-column: 3; }
-.pos-mpi                { grid-row: 3; grid-column: 3; }
-.pos-shared-memory      { grid-row: 4; grid-column: 4; }
-.pos-vectorisation      { grid-row: 1; grid-column: 4; }
-.pos-roofline           { grid-row: 1; grid-column: 5; }
-.pos-strong-scaling     { grid-row: 2; grid-column: 5; }
-.pos-weak-scaling       { grid-row: 2; grid-column: 6; }
-.pos-instructions      { grid-row: 3; grid-column: 1; }
-.pos-link              { grid-row: 4; grid-column: 1; }
-.pos-logos             { grid-row: 3; grid-column: 6; }
 
+    gap:2.5rem;
 
+    align-items:center;
 
+    justify-content:center;
 
-.arch-card:hover {
-  transform: translateY(-2px);
-  filter: brightness(0.97);
-  background: var(--pink);
-}
+    width:100%;
+
+    padding:3rem 2rem;
 
-.arch-card .title {
-  font-weight: 700;
-  font-size: 20px;
-  text-align: center;
-  line-height: 1.2;
-  margin-left:0.1rem;
-  margin-right:0.1rem;
 }
 
 
-.arch-card.active {
-  background: var(--pink);
-  opacity: 1;
-  transform: translateY(-2px);
-  display: flex;
-  align-items: center;
-}
 
-.arch-card.active .title {
-  font-size: 15px;
-  margin-bottom:0.1rem !important;
-    margin-top:0.1rem !important;
-}
+/* ==========================================================
+   MAP
+   ========================================================== */
 
-.arch-card.active .btn {
-  background: #ffffff;  
-  color: var(--bg) ;    
-  font-weight: 600;
-  font-size: 18px;
-  width: 130px;
-  text-align: center;
-  border-radius: 22px;
+
+.uk-map-container {
+
+    position:relative;
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:auto;
+
 }
 
-.arch-card.active .btn:hover {
-  background: #ffffff;    
-  color: #000000; 
+
+.uk-map {
+
+    width:200%;
+    display:block;
+
 }
 
 
 
+/* ==========================================================
+   SIDE INFORMATION CARDS
+   ========================================================== */
 
 
+.side-panel {
 
-.arch-card.active .card-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;  
-  align-items: center;      
-  height: 100%;
-  gap: 1px;                
-}
+    display:flex;
 
-.arch-card.active .actions {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; 
-  align-items: center;
-  gap: 2px;               
-}
+    flex-direction:column;
 
-.arch-card.active .actions {
-  max-height: 200px;
+    gap:2rem;
+
 }
 
 
 
+.side-panel .info-card {
 
-.arch-card.connected {
-  background: #0fb3a2; 
-  opacity: 1;
-}
 
+    background:white;
 
+    padding:2rem;
 
 
+    border-radius:24px;
 
-.arch-card .actions {
-  max-height: 0;
-  overflow: hidden;
-}
 
+    box-shadow:
+        0 15px 40px rgba(0,34,72,.12);
 
 
+    border-top:6px solid #002248;
 
-.arch-card.before {
-  background: #c4b2a1;
-  color: #000000;
-}
 
-.arch-card.connected {
-  background: #7f9a79;
-  color: #000000;
-}
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
 
-.arch-card.after {
-  background: #a696a5;
-  color: #000000;
 }
 
 
-.arch-card.unrelated {
-  background: #005e80;
-  color: #ffffff;
-  opacity: 1;
-  border: 4px solid #ffffff;
-}
+.side-panel .info-card:hover {
 
-.arch-card.unrelated .title {
-  color: #ffffff;
-}
 
+    transform:translateY(-5px);
 
 
-#arrows-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
+    box-shadow:
+        0 20px 50px rgba(0,34,72,.18);
 
-.graph-grid {
-  position: relative;
-  z-index: 1;
 }
 
 
 
+.side-panel h2 {
 
-.arrow {
-  stroke: #355f6b;
-  stroke-width: 2;
-  fill: none;
-    stroke-linejoin: round;
-  stroke-linecap: round;
-}
+    margin-top:0;
 
+    color:#002248;
 
-.arrow.active {
-  opacity: 1;
-}
+    font-size:1.5rem;
 
-.arrow-before {
-  stroke: #c4b2a1;                
-  stroke-dasharray: 6 6;         
 }
+
+
+
+.side-panel p {
+
+    color:#555;
+
+    line-height:1.6;
 
-.arrow-required {
-  stroke: #7f9a79;                
+    margin-bottom:0;
+
 }
+
+
+
+/* ==========================================================
+   MAP MARKERS
+   ========================================================== */
+
+
+.marker {
+
+    position:absolute;
+
+
+    width:24px;
+
+    height:24px;
+
+
+    border:none;
+
+    border-radius:50%;
 
-.arrow-after {
-  stroke: #ABDFE3;                
+
+    background:#002248;
+
+
+    cursor:pointer;
+
+
+    transform:
+        translate(-50%,-50%);
+
+
+    z-index:20;
+
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+
+
 }
+
+
 
+.marker::before {
 
 
+    content:"";
 
-.video-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+
+    position:absolute;
+
+
+    inset:-8px;
+
+
+    border-radius:50%;
+
+
+    border:
+
+    2px solid rgba(214,40,40,.45);
+
+
+    animation:pulse 2.5s infinite;
+
+
 }
+
 
-.video-modal-content {
-  background: #6c2a68;
-  border-radius: 16px;
-  padding: 24px;
-  width: 90%;
-  max-width: 900px;
-  color: white;
-  position: relative;
+
+.marker:hover {
+
+
+    background:#005bbb;
+
+
+    transform:
+        translate(-50%,-50%)
+        scale(1.4);
+
+
+    box-shadow:
+
+        0 0 25px rgba(0,91,187,.5);
+
+
 }
+
+
+
+.marker:focus {
 
-.video-modal h2 {
-  margin: 0 0 4px 0;
-  font-size: 50px;
-  text-align: center;
-   color: #ffffff;
+    outline:none;
+
 }
+
+
+
+/* pulse */
+
+@keyframes pulse {
+
+
+    0% {
+
+        transform:scale(.8);
+
+        opacity:.8;
+
+    }
+
+
+    70% {
+
+        transform:scale(1.8);
 
-.video-modal p {
-  margin: 0 0 16px 0;
-  opacity: 0.85;
-    color: #ffffff;
+        opacity:0;
+
+    }
+
+
+    100% {
+
+        opacity:0;
+
+    }
+
 }
+
+
+
+/* ==========================================================
+   MODAL
+   ========================================================== */
+
+
+.uni-modal {
+
+
+    position:fixed!important;
+
+
+    inset:0;
+
+
+    display:none;
+
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    background:
+
+    rgba(0,0,0,.55);
+
+
+    backdrop-filter:blur(5px);
+
 
-.video-wrapper {
-  position: relative;
-  padding-top: 56.25%;
+    z-index:999999;
+
+
 }
+
+
+
+.uni-modal.show {
+
+    display:flex;
 
-.video-wrapper iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
 }
+
+
+
+
+.uni-modal-card {
+
+
+    display:flex;
+
+
+    width:90vw;
+
+
+    max-width:1400px;
+
+
+    height:85vh;
+
+
+    background:white;
+
+
+    border-radius:30px;
+
+
+    overflow:hidden;
+
+
+    box-shadow:
 
-.arch-ins {
-  width: 300px;
-  min-height: 100px;
+        0 30px 80px rgba(0,0,0,.35);
 
-  background: #042f39; 
 
+    border-top:
 
-  padding: 24px;
-  cursor: default;
+        12px solid var(--uni-color);
+
+
+    animation:popup .3s ease;
+
+
 }
+
+
 
+/* ==========================================================
+   CITY IMAGE
+   ========================================================== */
 
-.arch-ins:hover {
-  transform: translateY(-3px);
-  filter: brightness(1.05);
+
+.city-panel {
+
+    width:45%;
+
+    position:relative;
+
 }
+
+
+.city-panel img {
+
 
+    width:100%;
 
 
-.arch-ins .title {
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  text-align: center;
-  color: #ffe8a3;
+    height:100%;
+
+
+    object-fit:cover;
+
+
 }
+
+
+
+.city-panel::after {
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    inset:0;
 
-.arch-ins p {
-  font-size: 18px;
-  line-height: 1.55;
-  color: #f3eee2;
-  text-align: center;
-  opacity: 0.9;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(0,0,0,.35)
+    );
+
+
 }
+
+
+
+/* ==========================================================
+   MODAL CONTENT
+   ========================================================== */
+
+
+.uni-content {
+
+
+    width:55%;
+
+
+    padding:3rem;
 
 
-.legend {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-top: 12px;
+    overflow-y:auto;
+
+
 }
+
+
+
+
+.uni-header {
 
-.legend-item {
-  display: grid;
-  grid-template-columns: 30px 1fr;
-  align-items: center;
-  column-gap: 12px;
 
-  font-size: 17px;
-  font-weight: 500;
-  color: #ffffff;
+    display:flex;
 
-  margin: 0; 
+
+    align-items:center;
+
+
+    gap:1.5rem;
+
+
 }
+
+
 
-.legend-item h1{
-  font-size: 20px !important;
-  margin-left:30px !important;
-  margin-top: 15px!important;
+.uni-logo {
+
+
+    width:150px;
+
+
+    height:150px;
+
+
+    object-fit:contain;
+
+
+    background:white;
+
+
+    padding:1rem;
+
+
+    border-radius:20px;
+
+
+    box-shadow:
+
+        0 10px 25px rgba(0,0,0,.1);
+
+
 }
+
+
+
+#uni-name {
+
+
+    margin:0;
+
+
+    font-size:2.2rem;
+
+
+    color:var(--uni-color);
 
-.legend h1{
-font-size:20px;
-margin-left:10px;
- font-weight: 500;
-  color: #ffffff;
+
 }
+
+
 
+.uni-location {
 
-#link.arch-ins {
-  width: 300px;
-  min-height: auto;
-  padding: 12px 16px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    color:#666;
 
-  background: var(--pink);
-  border-radius: 16px;
-  border: 2px solid var(--box-stroke);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  transition: transform 0.2s, filter 0.2s;
 }
+
+
+
+/* ==========================================================
+   PROGRAMME BANNER
+   ========================================================== */
+
+
+.programme-banner {
+
+
+    margin:2rem 0;
+
+
+    padding:1.5rem;
+
 
+    border-radius:18px;
 
 
+    background:var(--uni-color);
 
-#link.arch-ins a {
-  font-size: 20px;
-  font-weight: 600;
-  color: #042f39;
-  text-align: center;
-  width: 100%;
-  margin: 0;
-  cursor: pointer;
+
+    color:white;
+
+
 }
+
+
+
+.programme-banner h3 {
 
 
+    margin:0 0 .5rem;
 
-.logo-small {
-  max-width: 100px;
-  max-height:100px;
-  width: auto; height: auto; object-fit: contain; display: block;
+    color:white;
+
 }
+
+
+
+/* ==========================================================
+   DETAILS GRID
+   ========================================================== */
+
+
+.info-grid {
+
 
-.logo-medium {
-  max-width: 200px;
-  max-height:200px;
-  width: auto; height: auto; object-fit: contain; display: block;
+    display:grid;
+    font-size:1rem;
+
+
+    grid-template-columns:repeat(2,1fr);
+
+
+    gap:1rem;
+
+
 }
+
+
+
+.info-grid .info-card {
+
+
+    background:#f6f8fb;
+
+
+    padding:1.2rem;
 
-.logo-large {
-  max-width: 200px;
-  max-height:200px;
-  width: auto; height: auto; object-fit: contain; display: block;
+
+    border-radius:15px;
+
+
 }
+
+
+
+.label {
+
+
+    display:block;
+
+
+    font-size:.75rem;
+
+
+    font-weight:700;
+
 
+    text-transform:uppercase;
 
 
-.arch-ins .card-content p {
-  color: #FFF8DC;
+    color:#777;
+
+
 }
+
+
+
+
+/* ==========================================================
+   BUTTONS
+   ========================================================== */
+
+
+.button-row {
+
+
+    display:flex;
+
+
+    gap:1rem;
+
 
-.color-box {
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  border: 4px solid var(--box-stroke);
-  margin: 0;
+    margin-top:2rem;
+
+
 }
+
+
+
+.primary-button,
+.secondary-button {
+
+
+    padding:14px 25px;
+
+
+    border-radius:12px;
+
+
+    font-weight:700;
+
+
+    text-decoration:none;
 
 
-/* colores según tus clases */
-.color-box.before {
-  background: #c4b2a1;
 }
 
-.color-box.connected {
-  background: #7f9a79;
+
+
+.primary-button {
+
+
+    background:var(--uni-color);
+
+
+    color:white!important;
+
+
 }
+
+
+
+.secondary-button {
+
+
+    border:2px solid var(--uni-color);
 
-.color-box.after {
-  background: #a696a5;
+
+    color:var(--uni-color)!important;
+
+
 }
+
+
+
+/* ==========================================================
+   CLOSE BUTTON
+   ========================================================== */
+
+
+.close-button {
+
+
+    position:absolute;
+
+
+    margin:20px;
+
 
-.page-title-box {
-  width: 100%;
-  max-width: 1100px;
+    right:0;
 
-  background: linear-gradient(180deg, #6c2a68 0%, #4b1f45 100%);
-  border-radius: 26px;
-  border: 1px solid var(--box-stroke);
 
-  box-shadow:
-    0 12px 28px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+    width:45px;
 
-  padding: 28px 36px;
-  margin: 0 auto 32px auto;
 
-  text-align: center;
+    height:45px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    font-size:25px;
+
+
+    cursor:pointer;
+
+
+    background:#eee;
+
+
 }
+
 
-.page-title-box h1 {
-  font-size: 25px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 
-  color: #ffffff;
-  margin-top: 0.15rem;
-    margin-bottom: 0.15rem;
+.close-button:hover {
+
+
+    background:#d62828;
+
+
+    color:white;
+
+
 }
+
+
+
+/* ==========================================================
+   ANIMATION
+   ========================================================== */
+
+
+@keyframes popup {
+
+
+    from {
 
-.page-title-box p {
-  font-size: 15px;
-  line-height: 1.5;
-  color: #f3eee2;
-  opacity: 0.9;
-  margin: 0;
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+
+    to {
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
 }
+
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+
+@media(max-width:1200px){
 
 
-.arch-ins a {
-  color: #ffffff !important;
-  text-decoration: underline;
+.interactive-layout {
+
+
+    grid-template-columns:1fr;
+
+
 }
+
+
 
-.arch-ins a:hover,
-.arch-ins a:focus-visible {
-  color: #e6e0d4;   /* slightly softer white */
+.side-panel {
+
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
 }
+
+
+
+.uk-map-container {
 
+    order:-1;
 
-.skip-link {
-  position: absolute;
-  left: -999px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  z-index: 100;
 }
 
-.skip-link:focus {
-  left: 10px;
-  top: 10px;
-  width: auto;
-  height: auto;
-  background: #000;
-  color: #fff;
-  padding: 8px 12px;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
+
 }
+
+
 
+@media(max-width:700px){
 
 
+.booth-title h1 {
 
-.canvas-scale {
-  transform-origin: top center;
+    font-size:2rem;
+
 }
+
+
 
-/* Default state – before card is active */
-.btn {
-  background: #ffffff;       /* Same as active – makes it always visible */
-  color: #042f39;
-  font-weight: 600;
-  font-size: 16px;
-  padding: 6px 12px;
-  border-radius: 22px;
-  border: 2px solid #ffffff;
-  display: inline-block;
-  text-align: center;
+.side-panel {
+
+    grid-template-columns:1fr;
+
 }
+
+
+
+.uni-modal-card {
+
+    flex-direction:column;
+
+    width:95vw;
 
-/* Keep your hover */
-.btn:hover,
-.btn:focus-visible {
-  background: #ffffff;
-  color: #000000;
-  outline: 3px solid #ffe66d;
-  outline-offset: 3px;
+    height:90vh;
+
 }
+
+
 
-@media (max-width: 768px) {
-body {
-  background: var(--bg);
+.city-panel,
+.uni-content {
+
+    width:100%;
+
 }
-  .canvas-scale {
-    transform: scale(0.7);
-  }
+
+
+.city-panel {
+
+    height:35%;
+
 }
 
 
-.initial-content,
-.page-content,
-#main {
-  overflow: visible !important;
+
+.info-grid {
+
+    grid-template-columns:1fr;
+
 }
 
 
+}
 
 
 </style>
 
 
 
-
-
-
-
-<br>
-
-<main id="main-content">
-
-
-<div class="page-title-box">
-  <h1>High-Performance Computing Concepts</h1>
-</div>
-
-
-
-<div class="canvas-scale">
-  <div class="graph-grid">
-
-    <svg id="arrows-layer"></svg>
-
-    <!-- cards aquí -->
-
-
-
-
-
-<div
-  id="instructions"
-  class="arch-ins pos-instructions"
->
-  
-
-  <div class="legend">
-    <div class="legend-item">
-      <span class="color-box before"></span>
-     <h1> Previous suggested lecture</h1>
-    </div>
-    <div class="legend-item">
-      <span class="color-box connected"></span>
-      <h1>Previous required lecture</h1>
-    </div>
-    <div class="legend-item">
-      <span class="color-box after"></span>
-     <h1> Next suggested lecture</h1>
-    </div>
-  </div>
-
-  
-</div>
-
-
-<div id="link" class="arch-ins pos-link">
-  <a href="https://training-academy.dirac.ac.uk/course/section.php?id=66">
-    Access the full course on the DiRAC Training Academy
-  </a>
-</div>
-
-
-
-
-
-<div
-  id="logos"
-  class="arch-logos pos-logos"
->
-  
-
-  <div class="legend">
-<div class="legend">
-  <img src="https://github.com/mzhc13/high-performance-computing-concepts-course/blob/main/assets/images/durham.png?raw=true" class="logo-large" alt="Durham">
-  <img src="https://github.com/mzhc13/high-performance-computing-concepts-course/blob/main/assets/images/ukri.png?raw=true" class="logo-medium" alt="UKRI">
-  <img src="https://github.com/mzhc13/high-performance-computing-concepts-course/blob/main/assets/images/dirac.png?raw=true" class="logo-small" alt="DiRAC">
-</div>
-
-  </div>
-
-</div>
-
-
-<div
-  id="logos"
-  class="arch-logos pos-cc"
->
-  <div class="legend">
-  
-  <img src="https://github.com/mzhc13/high-performance-computing-concepts-course/blob/main/assets/images/cc.png?raw=true" alt="Logo 1">
-  </div>
-
-</div>
-
-
-
-
-
-
-<div
-  id="von-neumann"
-  class="arch-card pos-von-neumann"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-von-neumann"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Von Neumann Architecture</h2>
-
-    <div class="actions" id="actions-von-neumann">
-      <a class="btn" href="#"
-        onclick="openVideo('3ru-v3sAdqw?si=Jj8Koun21HpjFCLY','Von Neumann Architecture','Professor Tobias Weinzierl'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=57">
-        ACtivities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-  
-  
-  
-
-
-  
- <div
-  id="caches"
-  class="arch-card pos-caches"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-caches"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Caches</h2>
-
-    <div class="actions" id="actions-caches">
-      <a class="btn" href="#"
-        onclick="openVideo('ZPXYoJJo8qA?si=ZlX967WyjtxgpLWm','Caches','Professor Tobias Weinzierl'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=66">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div
-  id="machine-architectures"
-  class="arch-card pos-machine-arch"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-machine-architectures"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Machine Architectures (Flynn’s Taxonomy)</h2>
-
-    <div class="actions" id="actions-machine-architectures">
-      <a class="btn" href="#"
-        onclick="openVideo('jWFImJ-5Gtg?si=BBZou2CJvwDj7EC-','Machine Architectures (Flynn’s Taxonomy)','Dr. Mladen Ivkovic'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=67">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-  
-<div
-  id="GPU"
-  class="arch-card pos-gpu"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-gpu"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">GPU Architecture</h2>
-
-    <div class="actions" id="actions-gpu">
-      <a class="btn" href="#"
-        onclick="openVideo('8axA0RUaxRA?si=kwFcCVbDKzJw3vw4','GPU Architecture','Dr. Christopher Marcotte'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=60">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-<div
-  id="MPI"
-  class="arch-card pos-mpi"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-mpi"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">MPI</h2>
-
-    <div class="actions" id="actions-mpi">
-      <a class="btn" href="#"
-        onclick="openVideo('i-88l2K9824?si=5hG4_gn3DE3_r6Tq','MPI','Dr. Christopher Marcotte'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=61">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-
- <div
-  id="vectorisation"
-  class="arch-card pos-vectorisation"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-vectorisation"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Vectorisation</h2>
-
-    <div class="actions" id="actions-vectorisation">
-      <a class="btn" href="#"
-        onclick="openVideo('7Z3JrE8SBgU?si=QB-EK98D3_63IAiq','Vectorisation','Dr. Thomas Flynn'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=62">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-<div
-  id="shared-memory"
-  class="arch-card pos-shared-memory"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-shared-memory"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Shared-Memory Parallel Paradigms</h2>
-
-    <div class="actions" id="actions-shared-memory">
-      <a class="btn" href="#"
-        onclick="openVideo('iwb17_aCSRA?si=NGorUytvUqWRMWEZ','Shared-Memory Parallel Paradigms','Dr. Mladen Ivkovic'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=93">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-<div
-  id="roofline"
-  class="arch-card pos-roofline"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-roofline"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Roofline</h2>
-
-    <div class="actions" id="actions-roofline">
-      <a class="btn" href="#"
-        onclick="openVideo('uhYFZrqe9VY?si=TbG28ic8nFSU0kAm','Roofline','Professor Tobias Weinzierl'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=63">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-<div
-  id="strong-scaling"
-  class="arch-card pos-strong-scaling"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-strong-scaling"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Strong Scaling</h2>
-
-    <div class="actions" id="actions-strong-scaling">
-      <a class="btn" href="#"
-        onclick="openVideo('99VgSkjLQM4?si=YqCN8fMLu2iB4Tt6','Strong Scaling','Dr. Christopher Marcotte'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=65">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
- <div
-  id="weak-scaling"
-  class="arch-card pos-weak-scaling"
-  role="button"
-  tabindex="0"
-  aria-expanded="false"
-  aria-controls="actions-weak-scaling"
-  onclick="nodeClick(this, event);"
-  onkeydown="if(event.key==='Enter' || event.key===' ') { nodeClick(this, event); }"
->
-  <div class="card-content">
-    <h2 class="title">Weak Scaling</h2>
-
-    <div class="actions" id="actions-weak-scaling">
-      <a class="btn" href="#"
-        onclick="openVideo('dVZqpXi5BRE?si=pNSgIwWY38rt4W12','Weak Scaling','Dr. Christopher Marcotte'); event.stopPropagation(); return false;">
-        Lecture
-      </a>
-      <a class="btn" href="https://training-academy.dirac.ac.uk/course/section.php?id=64">
-        Activities
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
-
-<!-- Modal para video -->
-<div id="video-modal" class="video-modal" onclick="closeVideo()">
-  <div class="video-modal-content" onclick="event.stopPropagation();">
-    <h2 id="video-title">Title</h2>
-    <p id="video-lecturer">Lecturer</p>
-    <div class="video-wrapper">
-      <iframe id="video-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-    <button onclick="closeVideo()" style="position:absolute;top:10px;right:10px;font-size:20px;background:none;border:none;color:#042f39;cursor:pointer;">×</button>
-  </div>
-</div>
-
-
-
-</div>
-
-</div>
-
-
-</main>
-
 <script>
+/*
+==============================================================
+UK Universities Interactive Map
+==============================================================
+*/
+
+const universities = {
+
+durham:{
+
+    name:"Durham University",
+
+    logo:"https://newresults.co.uk/wp-content/uploads/2022/02/durham-university-logo.png",
+      cityImage:"https://images.pexels.com/photos/23884118/pexels-photo-23884118.jpeg",
+
+    location:"Durham, England",
+       brandColor:"#68246D",
+
+    website:"https://www.durham.ac.uk/",
+
+    programmeName:"MSc Scientific Computing and Data Analysis",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.durham.ac.uk/",
+
+    russell:"Yes",
+
+    description:
+    "Develop advanced computational, programming and data analysis skills through a research-led Master's programme with strong links to high-performance computing and research software engineering."
+
+},
+
+sheffield: {
+
+    name:"The University of Sheffield",
+
+    logo:"https://sheffcol.ac.uk/uploads/academies/07c79200972ccb1880b2c23182109c8f.png",
+
+    cityImage:"https://images.pexels.com/photos/26310472/pexels-photo-26310472.jpeg",
+
+    location:"Sheffield, England",
+
+    brandColor:"#460099",
+
+    website:"https://www.sheffield.ac.uk/",
+
+    programmeName:"Artificial Intelligence MSc",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.sheffield.ac.uk/postgraduate/taught/courses",
+
+    russell:"Yes",
+
+    description:
+    "Study in a leading research environment with strong expertise in computer science, artificial intelligence and data science. Sheffield's MSc programmes combine advanced technical training, research excellence and practical experience to prepare students for careers in academia and industry."
+
+},
 
 
-const relations = {
-"von-neumann": {
-  suggestedPrev: [],
-  requiredPrev: [],
-  next: [
-    { id: "caches", portFrom: "R", portTo: "L" },
-    { id: "machine-architectures", portFrom: "B", portTo: "L" }
-  ]
+ucl: {
+
+    name:"University College London (UCL)",
+
+    logo:"https://www.ucl.ac.uk/brand-and-experience/sites/brand_and_experience/files/styles/content_cards_mobile/public/2025-11/Web%20Cards_Logo.png.jpg?itok=EnXdgDmf",
+
+    cityImage:"https://images.pexels.com/photos/34686159/pexels-photo-34686159.jpeg",
+
+    location:"London, England",
+
+    brandColor:"#392250",
+
+    website:"https://www.ucl.ac.uk/",
+
+    programmeName:"Computer Science MSc",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.ucl.ac.uk/prospective-students/graduate",
+
+    russell:"Yes",
+
+    description:
+    "Join one of the world's leading multidisciplinary universities and study in the heart of London. UCL's MSc programmes in computer science, AI and data science offer research-led teaching, access to a global community, and opportunities to work on the technologies shaping the future."
+
+},
+
+
+imperial: {
+
+    name:"Imperial College London",
+
+    logo:"https://upload.wikimedia.org/wikipedia/commons/0/06/Imperial_College_London_new_logo.png",
+
+    cityImage:"https://images.pexels.com/photos/29373124/pexels-photo-29373124.jpeg",
+
+    location:"London, England",
+
+    brandColor:"#0000CD",
+
+    website:"https://www.imperial.ac.uk/",
+
+    programmeName:"MSc Advanced Computing",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.imperial.ac.uk/study/subjects/computing/",
+
+    russell:"Yes",
+
+    description:
+    "Imperial's computing programmes combine world-leading research with advanced technical training. Students work alongside experts in artificial intelligence, data science, software engineering and emerging digital technologies."
+
+},
+
+
+manchester: {
+
+    name:"The University of Manchester",
+
+    logo:"https://wp.logos-download.com/wp-content/uploads/2022/10/University_of_Manchester_Logo.png?dl",
+
+    cityImage:"https://images.pexels.com/photos/34568220/pexels-photo-34568220.jpeg",
+
+    location:"Manchester, England",
+
+    brandColor:"#660099",
+
+    website:"https://www.manchester.ac.uk/",
+
+    programmeName:"MSc Advanced Computer Science",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.manchester.ac.uk/study/masters/",
+
+    russell:"Yes",
+
+    description:
+    "Study at one of the UK's largest research universities, with expertise spanning artificial intelligence, data science, software engineering and high-performance computing. Manchester combines academic excellence with strong industry connections."
+
+},
+
+
+leeds: {
+
+    name:"University of Leeds",
+
+    logo:"https://international-sustainable-campus-network.org/wp-content/uploads/2019/10/University-of-Leeds_logo-750x750.png",
+
+    cityImage:"https://images.pexels.com/photos/8070163/pexels-photo-8070163.jpeg",
+
+    location:"Leeds, England",
+
+    brandColor:"#000000",
+
+    website:"https://www.leeds.ac.uk/",
+
+    programmeName:"High-Performance Graphics and Games Engineering MSc",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://courses.leeds.ac.uk/",
+
+    russell:"Yes",
+
+    description:
+    "Explore advanced topics in computer science through research-led teaching and practical projects. Leeds provides a vibrant postgraduate environment with expertise in artificial intelligence, data science and digital innovation."
+
+},
+
+
+birmingham: {
+
+    name:"University of Birmingham",
+
+    logo:"https://www.theade.co.uk/media/dntnuvbm/university-of-birmingham-logo.png?rmode=pad&width=226&height=95&bgcolor=fff",
+
+    cityImage:"https://images.pexels.com/photos/36202585/pexels-photo-36202585.png",
+
+    location:"Birmingham, England",
+
+    brandColor:"#C59A00",
+
+    website:"https://www.birmingham.ac.uk/",
+
+    programmeName:"Cyber Security MSc",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.birmingham.ac.uk/postgraduate/courses",
+
+    russell:"Yes",
+
+    description:
+    "Develop advanced skills in computing through a research-intensive Master's programme. Birmingham offers expertise across artificial intelligence, software engineering, cybersecurity and data-driven technologies."
+
+},
+
+
+cardiff: {
+
+    name:"Cardiff University",
+
+    logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWBzegvjnnTX4ClQ-gny-lweG_UALwGKayspYLU41Y5sFrQVHGP0z5gFQ&s=10",
+
+    cityImage:"https://images.pexels.com/photos/20028958/pexels-photo-20028958.jpeg",
+
+    location:"Cardiff, Wales",
+
+    brandColor:"#E3241B",
+
+    website:"https://www.cardiff.ac.uk/",
+
+    programmeName:"Advanced Computer Science (MSc)",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.cardiff.ac.uk/study/postgraduate",
+
+    russell:"Yes",
+
+    description:
+    "Cardiff's postgraduate computing programmes combine technical depth with research excellence. Students benefit from expertise in artificial intelligence, data science, cybersecurity and software development."
+
+},
+
+
+belfast: {
+
+    name:"Queen's University Belfast",
+
+    logo:"https://aspect.ac.uk/wp-content/uploads/2021/03/Aspect-Queens-University-Belfast-logo.png",
+
+    cityImage:"https://images.pexels.com/photos/37547731/pexels-photo-37547731.jpeg",
+
+    location:"Belfast, Northern Ireland",
+
+    brandColor:"#E30613",
+
+    website:"https://www.qub.ac.uk/",
+
+    programmeName:"MSc Computer Science",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.qub.ac.uk/courses/postgraduate-taught/",
+
+    russell:"Yes",
+
+    description:
+    "Queen's University Belfast offers research-led Master's programmes in computing and artificial intelligence, combining advanced technical learning with opportunities to work on real-world digital challenges."
+
+},
+
+
+oxford: {
+
+    name:"University of Oxford",
+
+    logo:"https://weadapt.org/wp-content/uploads/2012/12/University-of-Oxford-scaled.jpg",
+
+    cityImage:"https://images.pexels.com/photos/10706578/pexels-photo-10706578.jpeg",
+
+    location:"Oxford, England",
+
+    brandColor:"#002248",
+
+    website:"https://www.ox.ac.uk/",
+
+    programmeName:"MSc in Advanced Computer Science",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"October",
+
+    programmeLink:"https://www.ox.ac.uk/admissions/graduate",
+
+    russell:"Yes",
+
+    description:
+    "Oxford's postgraduate computing programmes provide an exceptional research environment where students explore advanced areas of computer science alongside internationally recognised academics."
+
+},
+
+
+qmul: {
+
+    name:"Queen Mary University of London",
+
+    logo:"https://images.seeklogo.com/logo-png/29/1/queen-mary-university-of-london-logo-png_seeklogo-299526.png",
+
+    cityImage:"https://images.pexels.com/photos/35282396/pexels-photo-35282396.jpeg",
+
+    location:"London, England",
+
+    brandColor:"#0A397D",
+
+    website:"https://www.qmul.ac.uk/",
+
+    programmeName:"Advanced Computer Science MScc",
+
+    programmeType:"Full-time • On campus",
+
+    duration:"1 year",
+
+    mode:"Full-time",
+
+    start:"September",
+
+    programmeLink:"https://www.qmul.ac.uk/postgraduate/taught/",
+
+    russell:"Yes",
+
+    description:
+    "Queen Mary combines research excellence with a diverse London location. Its computing Master's programmes provide advanced training in artificial intelligence, data science and modern digital technologies."
+
 }
 
-
-,
-
-  "caches": {
-    suggestedPrev: [],
-    requiredPrev: [ 
-    { id: "von-neumann", portFrom: "L", portTo: "R" }],
-    next: [
-    { id: "vectorisation", portFrom: "R", portTo: "L" }]
-  },
-
-"vectorisation": {
-  suggestedPrev: [
-    { id:"GPU", portFrom: "BL", portTo: "TR" },
-    { id:"shared-memory", portFrom: "B", portTo: "T" }
-  ],
-  requiredPrev: [
-    { id:"caches", portFrom: "L", portTo: "R" },
-    { id:"machine-architectures", portFrom: "TR", portTo: "BL" }
-  ],
-  next: [
-    {id: "roofline",  portFrom: "R", portTo: "L" }
-  ]
-}
-,
-
-  "machine-architectures": {
-  suggestedPrev: [],
-  requiredPrev: [
-  {id: "von-neumann", portFrom: "L", portTo: "B"}],
-  next: [
-    {id: "vectorisation", portFrom: "BL", portTo: "TR"},
-    {id: "GPU", portFrom: "R", portTo: "L"},
-    {id: "MPI", portFrom: "B", portTo: "L"},
-    {id: "shared-memory", portFrom: "B", portTo: "BL"}
-  ]
-},
-
-GPU: {
-  suggestedPrev: [],
-  requiredPrev: [{id: "machine-architectures", portFrom: "R", portTo: "L"}],
-  next: [
-    {id: "vectorisation", portFrom: "TR", portTo: "BL"},
-    {id: "shared-memory", portFrom: "R", portTo: "TL"}
-  ]
-},
-
-"shared-memory": {
-  suggestedPrev: [
-    {id: "MPI", portFrom: "L", portTo: "B"},
-    {id: "GPU", portFrom: "TL", portTo: "R"}
-  ],
-  requiredPrev: [
-  {id: "machine-architectures", portFrom: "BL", portTo: "B"}],
-  next: [
-    {id: "strong-scaling", portFrom: "R", portTo: "B"},
-    {id: "vectorisation", portFrom: "T", portTo: "B"}
-  ]
-},
-
-
-"MPI": {
-  suggestedPrev: [],
-  requiredPrev: [
-  {id: "machine-architectures", portFrom: "L", portTo: "B"}],
-  next: [
-    {id: "strong-scaling", portFrom: "R", portTo: "BL"},
-    {id: "shared-memory", portFrom: "B", portTo: "L"}
-  ]
-},
-
-"roofline": {
-  suggestedPrev: [],
-  requiredPrev: [
-  {id: "vectorisation", portFrom: "L", portTo: "R"}],
-  next: []
-},
-
-
-"strong-scaling": {
-  suggestedPrev: [
-    {id: "MPI", portFrom: "R", portTo: "L"},
-    {id: "shared-memory", portFrom: "B", portTo: "R"}
-  ],
-  requiredPrev: [],
-  next: [
-    {id: "weak-scaling", portFrom: "R", portTo: "L"}
-  ]
-},
-
-
-
-
-
-"weak-scaling": {
-  suggestedPrev: [],
-  requiredPrev: [{id:
-  "strong-scaling", portFrom: "L", portTo: "R"}],
-  next: []
-  }
 };
 
 
 
 
 
-function intersectRect(cx, cy, hw, hh, dx, dy) {
-  const tx = dx !== 0 ? hw / Math.abs(dx) : Infinity;
-  const ty = dy !== 0 ? hh / Math.abs(dy) : Infinity;
-  const t = Math.min(tx, ty);
-  return {
-    x: cx + dx * t,
-    y: cy + dy * t
-  };
+
+
+/* ====================================================== */
+
+const cityImage=document.getElementById("city-image");
+
+const modal = document.getElementById("uni-modal");
+
+const closeButton = document.getElementById("close-modal");
+
+const nameElement = document.getElementById("uni-name");
+
+const locationElement = document.getElementById("uni-location");
+
+const descriptionElement = document.getElementById("uni-description");
+
+const russellElement = document.getElementById("uni-russell");
+
+const websiteElement = document.getElementById("uni-link");
+
+const logoElement = document.getElementById("uni-logo");
+
+const programmeName = document.getElementById("programme-name");
+
+const programmeType = document.getElementById("programme-type");
+
+const programmeDuration = document.getElementById("programme-duration");
+
+const programmeMode = document.getElementById("programme-mode");
+
+const programmeStart = document.getElementById("programme-start");
+
+const programmeLink = document.getElementById("programme-link");
+
+
+function openUniversity(id){
+
+    const uni = universities[id];
+
+    if(!uni) return;
+
+
+        document.querySelector(".uni-modal-card")
+        .style.setProperty("--uni-color", uni.brandColor);
+
+    logoElement.src = uni.logo;
+
+    logoElement.alt = uni.name + " logo";
+
+    nameElement.textContent = uni.name;
+
+    locationElement.textContent = uni.location;
+
+    programmeName.textContent = uni.programmeName;
+
+    programmeType.textContent = uni.programmeType;
+
+    programmeDuration.textContent = uni.duration;
+
+    programmeMode.textContent = uni.mode;
+
+    programmeStart.textContent = uni.start;
+
+    russellElement.textContent = uni.russell;
+
+    descriptionElement.textContent = uni.description;
+
+    programmeLink.href = uni.programmeLink;
+
+    websiteElement.href = uni.website;
+
+    cityImage.src = uni.cityImage;
+
+cityImage.alt = uni.name + " city";
+
+    modal.classList.add("show");
+
+}
+/* ====================================================== */
+
+function closeModal(){
+
+    modal.classList.remove("show");
+
 }
 
-function getPort(rect, port) {
-  const x0 = rect.left;
-  const y0 = rect.top;
-  const w = rect.width;
-  const h = rect.height;
+/* ====================================================== */
 
-  switch (port) {
-    case "TL": return { x: x0,         y: y0 };
-    case "T":  return { x: x0 + w/2,   y: y0 };
-    case "TR": return { x: x0 + w,     y: y0 };
+document.querySelectorAll(".marker").forEach(marker=>{
 
-    case "L":  return { x: x0,         y: y0 + h/2 };
-    case "R":  return { x: x0 + w,     y: y0 + h/2 };
+    marker.addEventListener("click",()=>{
 
-    case "BL": return { x: x0,         y: y0 + h };
-    case "B":  return { x: x0 + w/2,   y: y0 + h };
-    case "BR": return { x: x0 + w,     y: y0 + h };
-  }
-}
+        openUniversity(marker.dataset.uni);
 
+    });
 
-
-
-
-function applyArrowStyle(line, type) {
-  if (!type) return;
-  line.classList.add("active", `arrow-${type}`);
-}
-
-</script>
-
-
-<script>
-
-function openVideo(videoId, title, lecturer) {
-  const modal = document.getElementById("video-modal");
-  const iframe = document.getElementById("video-iframe");
-  const titleEl = document.getElementById("video-title");
-  const lecturerEl = document.getElementById("video-lecturer");
-
-  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-  titleEl.textContent = title;
-  lecturerEl.textContent = lecturer;
-
- 
-  modal.style.display = "flex";
-}
-
-
-function closeVideo() {
-  const modal = document.getElementById("video-modal");
-  const iframe = document.getElementById("video-iframe");
-
-  
-  modal.style.display = "none";
-
-
-  iframe.src = "";
-}
-</script>
-
-
-
-<script>
-const svg = document.getElementById("arrows-layer");
-
-function createArrowheads(svg) {
-  const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-  defs.innerHTML = `
-    <marker id="arrowhead-end"
-      markerWidth="10"
-      markerHeight="7"
-      refX="10"
-      refY="3.5"
-      orient="auto"
-      markerUnits="strokeWidth">
-      <polygon points="0 0, 10 3.5, 0 7"
-               fill="context-stroke"/>
-    </marker>
-
-    <marker id="arrowhead-start"
-      markerWidth="10"
-      markerHeight="7"
-      refX="0"
-      refY="3.5"
-      orient="auto"
-      markerUnits="strokeWidth">
-      <polygon points="10 0, 0 3.5, 10 7"
-               fill="context-stroke"/>
-    </marker>
-  `;
-  svg.appendChild(defs);
-}
-
-
-createArrowheads(svg);
-
-
-
-function pairKey(a, b) {
-  return [a, b].sort().join("__");
-}
-
-
-function createBaseLine(a, b, portFrom = "R", portTo = "L") {
-  const from = document.getElementById(a);
-  const to   = document.getElementById(b);
-  if (!from || !to) return null;
-
-  const r1 = from.getBoundingClientRect();
-  const r2 = to.getBoundingClientRect();
-  const parent = document.querySelector(".graph-grid").getBoundingClientRect();
-
-  const p1 = getPort(r1, portFrom);
-  const p2 = getPort(r2, portTo);   
-
-
-  p1.x -= parent.left; p1.y -= parent.top;
-  p2.x -= parent.left; p2.y -= parent.top;
-
-  
-  let mid = { x: p1.x, y: p1.y };
-
-  const margin = 12; 
-  switch (portFrom) {
-    case "L": p1.x -= margin; break;
-    case "R": p1.x += margin; break;
-    case "T": p1.y -= margin; break;
-    case "B": p1.y += margin; break;
-  }
-
-  switch (portTo) {
-    case "L": p2.x -= margin; break;
-    case "R": p2.x += margin; break;
-    case "T": p2.y -= margin; break;
-    case "B": p2.y += margin; break;
-  }
-  
-  if (portFrom === "L") mid.x = p2.x;
-  else if (portFrom === "R") mid.x = p2.x;
-  else if (portFrom === "T") mid.y = p2.y;
-  else if (portFrom === "B") mid.y = p2.y;
-  else if (portFrom === "TL" || portFrom === "TR") mid.y = p2.y;
-  else if (portFrom === "BL" || portFrom === "BR") mid.y = p2.y;
-
-
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute(
-    "d",
-    `M ${p1.x} ${p1.y}
-     L ${mid.x} ${mid.y}
-     L ${p2.x} ${p2.y}`
-  );
-
-  path.classList.add("arrow");
-  svg.appendChild(path);
-  return path;
-}
-
-
-
-
-function drawRelation(from, rel) {
-  const to = typeof rel === "string" ? rel : rel.id;
-  const portFrom = rel.portFrom || "R";
-  const portTo   = rel.portTo   || "L";
-
-  const key = pairKey(from, to);
-
-  let line = document.querySelector(`.arrow[data-key="${key}"]`);
-  if (!line) {
-    line = createBaseLine(from, to, portFrom, portTo);
-    if (!line) return;
-
-    line.dataset.key = key;
-    line.dataset.a = from;
-    line.dataset.b = to;
-  }
-}
-
-
-
-function applyArrowStyle(line, type) {
-  if (!type) return;
-  line.classList.add("active", `arrow-${type}`);
-}
-
-
-Object.entries(relations).forEach(([from, rel]) => {
-  rel.next.forEach(r => drawRelation(from, r));
-  rel.requiredPrev.forEach(r => drawRelation(r.id, { ...r, id: from }));
 });
 
+/* ====================================================== */
 
-function styleArrowByNode(line, node, direction) {
-  line.classList.add("active");
+closeButton.addEventListener("click",closeModal);
 
-  if (node.classList.contains("connected")) {
-    line.classList.add("arrow-required");
-  } 
-  else if (node.classList.contains("before")) {
-    line.classList.add("arrow-before");
-  } 
-  else if (node.classList.contains("after")) {
-    line.classList.add("arrow-after");
-  }
+/* ====================================================== */
 
-  orientArrow(line, direction);
-}
+modal.addEventListener("click",(event)=>{
 
+    if(event.target===modal){
 
-function orientArrow(line, fromSelected) {
-  line.removeAttribute("marker-start");
-  line.removeAttribute("marker-end");
+        closeModal();
 
-  if (fromSelected === "to") {
- 
-    line.setAttribute("marker-start", "url(#arrowhead-start)");
-  } else {
-   
-    line.setAttribute("marker-end", "url(#arrowhead-end)");
-  }
-}
-
-
-
-function nodeClick(card, event) {
-  event.stopPropagation();
-  const allCards = document.querySelectorAll(".arch-card");
-  const id = card.id;
-
-
-  allCards.forEach(c => {
-    c.classList.remove("active","before","after","connected","unrelated");
-  });
-
-
-  card.classList.add("active");
-
-
-  if (relations[id]) {
-const { suggestedPrev = [], requiredPrev = [], next = [] } = relations[id];
-
-suggestedPrev.forEach(rel => {
-  const rid = typeof rel === "string" ? rel : rel.id;
-  const el = document.getElementById(rid);
-  if (el) el.classList.add("before");
-});
-
-requiredPrev.forEach(rel => {
-  const rid = typeof rel === "string" ? rel : rel.id;
-  const el = document.getElementById(rid);
-  if (el) el.classList.add("connected");
-});
-
-next.forEach(rel => {
-  const rid = typeof rel === "string" ? rel : rel.id;
-  const el = document.getElementById(rid);
-  if (el) el.classList.add("after");
-});
-
-
-  }
-
-
-  allCards.forEach(c => {
-    if (
-      c !== card &&
-      !c.classList.contains("before") &&
-      !c.classList.contains("after") &&
-      !c.classList.contains("connected")
-    ) c.classList.add("unrelated");
-  });
-
-
-const arrows = document.querySelectorAll(".arrow");
-
-arrows.forEach(line => {
-  line.classList.remove(
-    "active",
-    "arrow-before",
-    "arrow-required",
-    "arrow-after"
-  );
-  line.removeAttribute("marker-start");
-  line.removeAttribute("marker-end");
-
-
-  if (line.dataset.a === id) {
-    const other = document.getElementById(line.dataset.b);
-    if (other) {
-      styleArrowByNode(line, other, "from");
-     
-      line.parentNode.appendChild(line);
     }
-  } 
- 
-  else if (line.dataset.b === id) {
-    const other = document.getElementById(line.dataset.a);
-    if (other) {
-      styleArrowByNode(line, other, "to");
-      // mover al final para que quede encima
-      line.parentNode.appendChild(line);
+
+});
+
+/* ====================================================== */
+
+document.addEventListener("keydown",(event)=>{
+
+    if(event.key==="Escape"){
+
+        closeModal();
+
     }
-  }
+
 });
 
-
-
-
-}
-
-
-function resetDiagram() {
-  const allCards = document.querySelectorAll(".arch-card");
-  const allArrows = document.querySelectorAll(".arrow");
-
-  allCards.forEach(c => {
-    c.classList.remove("active","before","after","connected","unrelated");
-  });
-
-
-  allArrows.forEach(line => {
-    line.classList.remove("active","arrow-before","arrow-required","arrow-after");
-    line.removeAttribute("marker-start");
-    line.removeAttribute("marker-end");
-  });
-}
-
-
-document.querySelector(".graph-grid").addEventListener("click", function(e){
-
-  if (e.target === this) {
-    resetDiagram();
-  }
-});
-</script>
+    </script>
