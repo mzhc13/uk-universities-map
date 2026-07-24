@@ -27,7 +27,7 @@ Explore postgraduate opportunities in HPC, AI and Digital Research
     <div class="map-glow"></div>
 
         <img
-            src='/assets/images/map-uk-watercolour.png'
+            src='https://github.com/mzhc13/uk-universities-map/blob/main/assets/images/map-uk-watercolour.png?raw=true'
             alt="Map of UK universities"
             class="uk-map">
 
