@@ -1114,6 +1114,142 @@ body {
 }
 
 
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 768px){
+
+    .booth-title{
+        padding:0 1rem;
+    }
+
+    .booth-title h1{
+        font-size:1.8rem;
+        line-height:1.15;
+    }
+
+    .booth-title p{
+        font-size:1rem;
+        margin-top:.8rem;
+    }
+
+    .interactive-layout{
+        padding:1rem;
+    }
+
+    .uk-map-container{
+        max-width:100%;
+        overflow:visible;
+    }
+
+    .uk-map{
+        width:100%;
+        max-width:100%;
+    }
+
+    /* Larger touch targets */
+    .marker{
+        width:28px;
+        height:28px;
+    }
+
+    .marker::before{
+        inset:-8px;
+    }
+
+    /* ---------- Modal ---------- */
+
+    .uni-modal{
+        align-items:flex-end;
+    }
+
+    .uni-modal-card{
+
+        flex-direction:column;
+
+        width:80vw;
+        height:100vh;
+
+        max-width:none;
+        border-radius:20px 20px 0 0;
+    }
+
+    .city-panel{
+
+        width:100%;
+        height:220px;
+    }
+
+    .uni-content{
+
+        width:100%;
+        padding:1.4rem;
+
+        overflow-y:auto;
+    }
+
+    .uni-header{
+        gap:1rem;
+        align-items:center;
+    }
+
+    .uni-logo{
+
+        width:80px;
+        height:80px;
+        padding:.5rem;
+    }
+
+    #uni-name{
+        font-size:1.4rem;
+    }
+
+    #uni-location{
+        font-size:.9rem;
+    }
+
+    .programme-banner{
+        padding:1rem;
+        margin:1.2rem 0;
+    }
+
+    .programme-banner h3{
+        font-size:1.1rem;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+        gap:.8rem;
+    }
+
+    .button-row{
+
+        flex-direction:column;
+    }
+
+    .primary-button,
+    .secondary-button{
+
+        width:100%;
+        text-align:center;
+    }
+
+    .close-button{
+
+        top:10px;
+        right:10px;
+        margin:0;
+
+        width:42px;
+        height:42px;
+
+        z-index:10;
+    }
+
+}
+
+
 </style>
 
 
