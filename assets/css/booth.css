@@ -59,9 +59,232 @@
 .lb.right{left:calc(100% + 6px);top:50%;transform:translateY(-50%)}
 .lb.left{right:calc(100% + 6px);top:50%;transform:translateY(-50%)}
 .lb.bottom{top:calc(100% + 4px);left:50%;transform:translateX(-50%)}
-@media(prefers-reduced-motion:no-preference){.dot:not(.empty)::after{animation:ping 2.8s infinite}}
-@keyframes ping{0%{transform:scale(.8);opacity:.7}70%,100%{transform:scale(1.5);opacity:0}}
 
+/* ---------- Improved mobile experience ---------- */
+@media (max-aspect-ratio: 1/1), (max-width: 820px) {
+
+  /* Keep the page within the viewport */
+  .stage {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-width: 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: .65em;
+    overflow: hidden;
+  }
+
+  /* Compact header, search and filters */
+  .side {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    gap: .5em;
+  }
+
+  .brand h1 {
+    font-size: 1.4em;
+    line-height: 1.15;
+  }
+
+  .search {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .search input {
+    min-height: 2.8em;
+  }
+
+  .chips {
+    flex-wrap: nowrap;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 0;
+    padding: .1em 0 .35em;
+    scrollbar-width: none;
+  }
+
+  .chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chips button {
+    flex: 0 0 auto;
+    min-height: 2.5em;
+  }
+
+  /* Map view: use all remaining space */
+  .stage[data-view="map"] {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .stage[data-view="map"] .results {
+    display: none;
+  }
+
+  .stage[data-view="map"] .mapwrap {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    justify-self: stretch;
+    align-self: stretch;
+    justify-content: center;
+    align-items: center;
+    container-type: size;
+    overflow: hidden;
+  }
+
+  /* Centre the map using the actual available space */
+  .stage[data-view="map"] .map {
+    width: min(100cqw, calc(100cqh * var(--r, .75)));
+    max-width: 100%;
+    max-height: 100%;
+    flex: 0 1 auto;
+    margin: auto;
+    box-sizing: border-box;
+  }
+
+  .map img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* List view remains available */
+  .stage[data-view="list"] {
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .stage[data-view="list"] .mapwrap {
+    display: none;
+  }
+
+  .stage[data-view="list"] .side {
+    height: 100%;
+  }
+
+  .stage[data-view="list"] .results {
+    display: flex;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  /* Full-screen university details */
+  /* Mobile course popup: centred card, not full screen */
+  .mdl {
+    padding: 1em;
+    overflow-y: auto;
+    place-items: center;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    max-height: 88vh;
+    max-height: 88dvh;
+    border-radius: 1.2em;
+    border-top-width: .35em;
+  }
+
+  .m-head {
+    flex: 0 0 auto;
+    padding: max(.8em, env(safe-area-inset-top)) 1em .8em;
+    gap: .7em;
+  }
+
+  .m-title {
+    min-width: 0;
+  }
+
+  .m-title h2 {
+    font-size: 1.2em;
+  }
+
+  .m-close {
+    flex: 0 0 auto;
+    min-width: 4em;
+    min-height: 2.8em;
+    padding: 0 .8em;
+  }
+
+  .m-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .m-list {
+    flex-direction: row;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: .55em;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    
+  }
+
+  .m-list button {
+    flex: 0 0 auto;
+    min-width: 11em;
+    max-width: 75vw;
+  }
+
+  .m-detail {
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 1em 1em max(1.5em, env(safe-area-inset-bottom));
+  }
+
+
+  .m-detail h3 {
+    font-size: 1.5em;
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cols {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+  }
+
+  .aux {
+    display: contents;
+  }
+
+  .btns {
+    order: -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+
+  .btns .bt {
+    flex: 1 1 40%;
+  }
+
+  .btns .bt:first-child {
+    flex-basis: 100%;
+  }
+}
+
+@keyframes ping{0%{transform:scale(.8);opacity:.7}70%,100%{transform:scale(1.5);opacity:0}}
 /* ---------- popup ---------- */
 .mdl{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:rgba(10,16,32,.62);animation:fade .2s}
 .sheet{display:flex;flex-direction:column;width:min(96vw,1240px);height:min(94dvh,920px);background:#fff;border-radius:1.4em;overflow:hidden;border-top:.5em solid var(--c);animation:rise .28s}
