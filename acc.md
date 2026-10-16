@@ -37,7 +37,7 @@ search: false
 
   <section class="mapwrap">
     <div class="map" id="map">
-      <img src="/assets/images/map-ucl.png" alt="Map of UK universities">
+      <img src="https://github.com/mzhc13/uk-universities-map/blob/main/assets/images/map-ucl.png?raw=true" alt="Map of UK universities">
     </div>
   </section>
 </main>
