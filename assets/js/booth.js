@@ -20,12 +20,64 @@ ids.forEach(id => list(id).forEach(c => hay.set(c,
 const KIOSK = new URLSearchParams(location.search).has("kiosk");
 if (KIOSK) document.documentElement.classList.add("lock");
 const st = { topic: "", qual: "", q: "" };
-let cur = null, sel = null, showAll = false;
+let cur = null, sel = null, showAll = false, opener = null;
 const match = c => (!st.topic || arr(c.subjects).includes(st.topic))
   && (!st.qual || c.qualification === st.qual)
   && st.q.split(/\s+/).filter(Boolean).every(w => hay.get(c).includes(w));
-const count = id => list(id).filter(match).length;
 const dirty = () => st.topic || st.qual || st.q;
+
+const stage = document.querySelector(".stage");
+const drawer = $("drawer"), grab = $("grab"), dbody = $("dbody"), fbtn = $("fbtn"), lbtn = $("lbtn");
+const portraitMQ = matchMedia("(max-aspect-ratio:1/1),(max-width:820px)");   /* keep in sync with booth.css */
+
+/* ---------- results drawer (phone + iPad portrait) ---------- */
+const PEEK_EM = 5.6;                                                          /* keep in sync with booth.css */
+const setSheet = s => {
+  drawer.dataset.state = s; stage.dataset.sheet = s; drawer.style.height = "";
+  lbtn.textContent = s === "peek" ? "Show list" : "Hide list";
+  lbtn.setAttribute("aria-expanded", s !== "peek");
+};
+const sheetHeights = () => {
+  const fs = parseFloat(getComputedStyle(stage).fontSize) || 16;
+  return { peek: fs * PEEK_EM + (parseFloat(getComputedStyle(drawer).paddingBottom) || 0), half: innerHeight * .46, full: innerHeight * .9 };
+};
+const toggleSheet = () => setSheet(drawer.dataset.state === "peek" ? "half" : "peek");
+const setFilters = open => {
+  drawer.classList.toggle("filt-open", open);
+  fbtn.setAttribute("aria-expanded", open);
+  if (open && portraitMQ.matches) setSheet("full");
+  dbody.scrollTop = 0;
+};
+fbtn.onclick = () => setFilters(!drawer.classList.contains("filt-open"));
+lbtn.onclick = toggleSheet;
+
+let drag = null;
+grab.addEventListener("pointerdown", e => {
+  if (!portraitMQ.matches || e.target.closest("button")) return;
+  drag = { y: e.clientY, h: drawer.offsetHeight, t: performance.now(), moved: false, id: e.pointerId };
+  grab.setPointerCapture(e.pointerId);
+  drawer.classList.add("drag");
+});
+grab.addEventListener("pointermove", e => {
+  if (!drag) return;
+  const dy = drag.y - e.clientY, H = sheetHeights();
+  if (Math.abs(dy) > 6) drag.moved = true;
+  if (drag.moved) drawer.style.height = Math.max(H.peek, Math.min(H.full, drag.h + dy)) + "px";
+});
+const endDrag = e => {
+  if (!drag) return;
+  const d = drag; drag = null;
+  drawer.classList.remove("drag");
+  if (!d.moved) { drawer.style.height = ""; toggleSheet(); return; }
+  const H = sheetHeights(), dt = Math.max(1, performance.now() - d.t);
+  const projected = drawer.offsetHeight + ((d.y - e.clientY) / dt) * 180;      /* flick carries it onward */
+  const next = Object.keys(H).reduce((a, k) => Math.abs(H[k] - projected) < Math.abs(H[a] - projected) ? k : a, "peek");
+  setSheet(next);
+};
+grab.addEventListener("pointerup", endDrag);
+grab.addEventListener("pointercancel", endDrag);
+addEventListener("resize", () => { if (!drag) drawer.style.height = ""; });
+grab.tabIndex = 0; grab.setAttribute("role", "group");
 
 /* ---------- filter chips ---------- */
 const top = (f, n) => {
@@ -40,15 +92,13 @@ chipRow("quals", "qual", top(c => arr(c.qualification), 4), "All levels");
 chipRow("topics", "topic", top(c => arr(c.subjects), 8), "All subjects");
 
 const q = $("q");
-q.oninput = () => { st.q = q.value.trim().toLowerCase(); paint(); };
+q.oninput = () => {
+  st.q = q.value.trim().toLowerCase(); paint();
+  if (st.q && portraitMQ.matches && drawer.dataset.state === "peek") setSheet("half");   /* show what the search found */
+};
 q.onkeydown = e => { if (e.key === "Enter") q.blur(); };   /* hides the iPad keyboard */
 const reset = () => { Object.assign(st, { topic: "", qual: "", q: "" }); q.value = ""; paint(); };
 $("reset").onclick = reset;
-const stage = document.querySelector(".stage");
-document.querySelectorAll("#views button").forEach(b => b.onclick = () => {
-  stage.dataset.view = b.dataset.view;
-  document.querySelectorAll("#views button").forEach(x => x.setAttribute("aria-pressed", x === b));
-});
 
 /* ---------- map ---------- */
 const map = $("map"), dots = {};
@@ -91,9 +141,12 @@ function paint() {
     e.append(h("p", "", "No programmes match. Try fewer words or clear the filters."), btn("bt", "Clear filters", reset));
     res.append(e);
   }
-  res.scrollTop = 0;
-  $("tally").textContent = `${plural(total, "programme")} at ${unis === 1 ? "1 university" : unis + " universities"}`;
+  dbody.scrollTop = 0; res.scrollTop = 0;
+  $("tally").replaceChildren(h("strong", "", plural(total, "programme")), h("span", "sub", ` at ${unis === 1 ? "1 university" : unis + " universities"}`));
   $("reset").hidden = !dirty();
+  stage.classList.toggle("filtered", !!dirty());
+  const nf = (st.topic ? 1 : 0) + (st.qual ? 1 : 0), fc = $("fcount");
+  fc.hidden = !nf; fc.textContent = nf;
 }
 
 /* ---------- popup ---------- */
@@ -104,6 +157,7 @@ const chips = items => { const d = h("div", "tags"); items.forEach(i => d.append
 
 function openUni(id, course) {
   const u = U[id]; cur = id; showAll = false; sel = course || null;
+  opener = document.activeElement;
   $("sheet").style.setProperty("--c", u.brand_color);
   $("m-head").style.backgroundImage = u.city_image ? `url("${u.city_image}")` : "";
   $("m-logo").hidden = !u.logo; if (u.logo) $("m-logo").src = u.logo;
@@ -165,29 +219,62 @@ function renderDetail(c) {
     if (!v) return; const t = h("div", "txt"); v.split(/\n+/).filter(Boolean).forEach(p => t.append(h("p", "", p))); main.append(sec(k, t));
   });
   [c.notes, c.programme_note].forEach(n => n && main.append(h("p", "note", n)));
-  const btns = h("div", "btns");
+
+  /* portrait: the first link plus Share become a sticky action bar, the rest move into a "More links" section */
+  const portrait = portraitMQ.matches;
+  const phone = !KIOSK && matchMedia("(max-width:700px)").matches;       /* a visitor's own phone, not the booth iPad */
+  const btns = h("div", "btns"), extra = [];
   [[c.programme_url, "View programme page", "bt"], [c.department_url, "Department", "bt o"], [c.promo_url, "More information", "bt o"], [c.video_url, "Watch video", "bt o"]]
-    .forEach(([u, t, k]) => /^https?:/.test(u || "") && btns.append(link(k, t, u)));
-  const url = deepLink(cur, c), narrow = matchMedia("(max-width:820px)").matches;
-  if (navigator.share && narrow) btns.append(btn("bt o", "Share this programme", () => navigator.share({ title: c.name, url }).catch(() => {})));
+    .forEach(([u, t, k]) => {
+      if (!/^https?:/.test(u || "")) return;
+      if (portrait && btns.children.length) extra.push(link("bt o", t, u));
+      else btns.append(link(portrait ? "bt" : k, t, u));
+    });
+  const url = deepLink(cur, c);
+  if (navigator.share && phone) btns.append(btn("bt o", "Share", () => navigator.share({ title: c.name, url }).catch(() => {})));
   if (btns.children.length) aux.append(btns);
   if (arr(c.subjects).length) aux.append(sec("Subject areas", chips(c.subjects)));
   if (arr(c.careers).length) aux.append(sec("Career pathways", chips(c.careers)));
-  if (window.qrcode && !narrow) try {
+  if (extra.length) { const m = h("div", "morelinks"); m.append(...extra); aux.append(sec("More links", m)); }
+  if (window.qrcode && !phone) try {
     const w = h("div", "qr"); w.append(qrSvg(url), h("p", "", "Scan with your phone camera to open this programme."));
     aux.append(sec("Take it with you", w));
   } catch (e) {}
   const cols = h("div", "cols"); cols.append(main, aux); d.append(cols);
 }
-const close = () => { mdl.hidden = true; };
+const close = () => {
+  mdl.hidden = true;
+  const o = opener; opener = null;
+  if (o && o.isConnected && o !== document.body) o.focus({ preventScroll: true });
+};
 $("m-close").onclick = close;
 mdl.addEventListener("click", e => { if (e.target === mdl) close(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
 
+/* swipe the popup header down to dismiss (portrait only) */
+const sheetEl = $("sheet"), mhead = $("m-head");
+let md = null;
+mhead.addEventListener("pointerdown", e => {
+  if (!portraitMQ.matches || e.target.closest("button")) return;
+  md = { y: e.clientY, t: performance.now() };
+  mhead.setPointerCapture(e.pointerId); sheetEl.style.transition = "none";
+});
+mhead.addEventListener("pointermove", e => { if (md) sheetEl.style.transform = `translateY(${Math.max(0, e.clientY - md.y)}px)`; });
+const endSwipe = e => {
+  if (!md) return;
+  const dy = Math.max(0, e.clientY - md.y), v = dy / Math.max(1, performance.now() - md.t); md = null;
+  sheetEl.style.transition = ""; sheetEl.style.transform = "";
+  if (dy > 120 || v > .6) close();
+};
+mhead.addEventListener("pointerup", endSwipe);
+mhead.addEventListener("pointercancel", endSwipe);
+
 /* ---------- kiosk: reset after 90 s without a touch ---------- */
 let idle;
-const bump = () => { clearTimeout(idle); idle = setTimeout(() => { close(); q.blur(); reset(); }, 90000); };
+const home = () => { close(); q.blur(); reset(); setFilters(false); setSheet("peek"); };
+const bump = () => { clearTimeout(idle); idle = setTimeout(home, 90000); };
 if (KIOSK) { ["pointerdown", "keydown", "scroll"].forEach(e => document.addEventListener(e, bump, true)); bump(); }
+setSheet("peek");
 paint();
 /* QR / shared link: ?u=<university>&p=<programme> opens that programme directly */
 const qs = new URLSearchParams(location.search), du = qs.get("u");

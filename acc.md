@@ -11,7 +11,7 @@ search: false
 <link rel="stylesheet" href="{{ '/assets/css/booth.css' | relative_url }}">
 <script>document.documentElement.classList.add("kiosk");</script>
 
-<main class="stage" data-view="map">
+<main class="stage" data-sheet="peek">
   <aside class="side">
     <header class="brand">
       <h1>Study HPC, AI and data in the UK</h1>
@@ -20,19 +20,30 @@ search: false
     <div class="search">
       <input id="q" type="search" placeholder="Search programmes, topics or careers" aria-label="Search programmes" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false">
     </div>
-    <div class="chips" id="quals" role="group" aria-label="Qualification"></div>
-    <div class="chips" id="topics" role="group" aria-label="Subject area"></div>
-    <div class="bar">
-      <div class="views" id="views" role="group" aria-label="View">
-        <button type="button" data-view="map" aria-pressed="true">Map</button>
-        <button type="button" data-view="list" aria-pressed="false">List</button>
+
+    <!-- Desktop: a normal sidebar. Phone and iPad portrait: a bottom drawer you can drag. -->
+    <section class="drawer" id="drawer" data-state="peek" aria-label="Results">
+      <div class="grab" id="grab">
+        <span class="pill" aria-hidden="true"></span>
+        <div class="bar">
+          <div class="status">
+            <p id="tally" aria-live="polite"></p>
+            <button id="reset" type="button" hidden>Clear</button>
+          </div>
+          <button class="fbtn" id="fbtn" type="button" aria-expanded="false" aria-controls="filters">Filters<span class="badge" id="fcount" hidden></span></button>
+          <button class="lbtn" id="lbtn" type="button" aria-expanded="false" aria-controls="dbody">Show list</button>
+        </div>
       </div>
-      <div class="status">
-        <p id="tally" aria-live="polite"></p>
-        <button id="reset" type="button" hidden>Clear</button>
+      <div class="dbody" id="dbody">
+        <div class="filters" id="filters">
+          <p class="flabel">Level</p>
+          <div class="chips" id="quals" role="group" aria-label="Qualification"></div>
+          <p class="flabel">Subject</p>
+          <div class="chips" id="topics" role="group" aria-label="Subject area"></div>
+        </div>
+        <div class="results" id="results"></div>
       </div>
-    </div>
-    <div class="results" id="results"></div>
+    </section>
   </aside>
 
   <section class="mapwrap">
