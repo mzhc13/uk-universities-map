@@ -6,7 +6,7 @@ durham:
   location: "Durham, England"
   brand_color: "#68246D"
   website: "https://www.durham.ac.uk/"
-  logo: "https://newresults.co.uk/wp-content/uploads/2022/02/durham-university-logo.png"
+  logo: "https://raw.githubusercontent.com/mzhc13/uk-universities-map/b648879f1d18b51256e1bf71d796a68d8d534d81/assets/images/durham.svg"
   city_image: "https://images.pexels.com/photos/23884118/pexels-photo-23884118.jpeg"
   russell: true
   description: "Research-led postgraduate study in computer science, scientific computing and AI, with access to Durham's own computing cluster."
@@ -46,7 +46,7 @@ imperial:
   location: "London, England"
   brand_color: "#0000CD"
   website: "https://www.imperial.ac.uk/"
-  logo: "https://upload.wikimedia.org/wikipedia/commons/0/06/Imperial_College_London_new_logo.png"
+  logo: "https://github.com/mzhc13/uk-universities-map/blob/main/assets/images/imperial.jpg?raw=true"
   city_image: "https://images.pexels.com/photos/29373124/pexels-photo-29373124.jpeg"
   russell: true
   description: "Imperial's computing programmes combine world-leading research with advanced technical training. Students work alongside experts in artificial intelligence, data science, software engineering and emerging digital technologies."
@@ -59,7 +59,7 @@ manchester:
   location: "Manchester, England"
   brand_color: "#660099"
   website: "https://www.manchester.ac.uk/"
-  logo: "https://wp.logos-download.com/wp-content/uploads/2022/10/University_of_Manchester_Logo.png?dl"
+  logo: "https://github.com/mzhc13/uk-universities-map/blob/main/assets/images/manchester.png?raw=true"
   city_image: "https://images.pexels.com/photos/34568220/pexels-photo-34568220.jpeg"
   russell: true
   description: "Study at one of the UK's largest research universities, with expertise spanning artificial intelligence, data science, software engineering and high-performance computing. Manchester combines academic excellence with strong industry connections."
@@ -72,7 +72,7 @@ leeds:
   location: "Leeds, England"
   brand_color: "#000000"
   website: "https://www.leeds.ac.uk/"
-  logo: "https://international-sustainable-campus-network.org/wp-content/uploads/2019/10/University-of-Leeds_logo-750x750.png"
+  logo: "https://github.com/mzhc13/uk-universities-map/blob/main/assets/images/leeds.png?raw=true"
   city_image: "https://images.pexels.com/photos/8070163/pexels-photo-8070163.jpeg"
   russell: true
   description: "Explore advanced topics in computer science through research-led teaching and practical projects. Leeds provides a vibrant postgraduate environment with expertise in artificial intelligence, data science and digital innovation."
@@ -89,8 +89,8 @@ warwick:
   location: "Coventry, England"
   brand_color: "#5B2C6F"
   website: "https://warwick.ac.uk/"
-  logo: ""
-  city_image: ""
+  logo: "https://github.com/mzhc13/uk-universities-map/blob/main/assets/images/warwick.png?raw=true"
+  city_image: "https://images.pexels.com/photos/31018425/pexels-photo-31018425.jpeg"
   russell: true
   description: "Postgraduate programmes in predictive modelling and scientific computing, plus the HetSys doctoral training centre."
   short: "Warwick"

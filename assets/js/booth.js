@@ -1,4 +1,4 @@
-/* Kiosk: map + search + filters + live results list + university popup. Data comes from _data/ via acc.md. */
+/* Kiosk: map + search + filters + live results list + university popup + "About this map" dialog. Data comes from _data/ via acc.md. */
 (() => {
 const U = window.UNIVERSITIES || {};
 const C = Object.fromEntries(Object.entries(window.COURSES || {}).map(([k, v]) => [k, Array.isArray(v) ? v : []]));
@@ -327,9 +327,34 @@ const endSwipe = e => {
 mhead.addEventListener("pointerup", endSwipe);
 mhead.addEventListener("pointercancel", endSwipe);
 
+/* ---------- "About this map" dialog (how to read the map, SC26 disclaimer, CAKE + QR) ---------- */
+const about = $("about"), CAKE_URL = "https://www.cake.ac.uk/";
+let aboutOpener = null;
+const openAbout = () => {
+  aboutOpener = document.activeElement;
+  const box = $("about-qr"), phone = !KIOSK && matchMedia("(max-width:700px)").matches;   /* no QR on a visitor's own phone: they can just tap the button */
+  if (window.qrcode && !phone && !box.querySelector("svg")) try {
+    const s = qrSvg(CAKE_URL); s.setAttribute("aria-label", "QR code for the CAKE website");
+    box.prepend(s); box.hidden = false;
+  } catch (e) {}
+  about.hidden = false; $("about-close").focus({ preventScroll: true });
+};
+const closeAbout = () => {
+  if (about.hidden) return;
+  about.hidden = true;
+  const o = aboutOpener; aboutOpener = null;
+  if (o && o.isConnected && o !== document.body) o.focus({ preventScroll: true });
+};
+$("mapinfo").onclick = openAbout;
+$("about-close").onclick = closeAbout;
+about.addEventListener("click", e => { if (e.target === about) closeAbout(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeAbout(); });
+/* on the booth iPad, don't open a new tab: show the dialog, which has the QR code */
+$("cake").addEventListener("click", e => { if (KIOSK) { e.preventDefault(); openAbout(); } });
+
 /* ---------- kiosk: reset after 90 s without a touch ---------- */
 let idle;
-const home = () => { close(); q.blur(); reset(); setFilters(false); setSheet("peek"); };
+const home = () => { close(); closeAbout(); q.blur(); reset(); setFilters(false); setSheet("peek"); };
 const bump = () => { clearTimeout(idle); idle = setTimeout(home, 90000); };
 if (KIOSK) { ["pointerdown", "keydown", "scroll"].forEach(e => document.addEventListener(e, bump, true)); bump(); }
 setSheet("peek");
