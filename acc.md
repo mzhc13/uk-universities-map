@@ -20,7 +20,6 @@ search: false
     <div class="search">
       <input id="q" type="search" placeholder="Search programmes, topics or careers" aria-label="Search programmes" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false">
     </div>
-
     <!-- Desktop: a normal sidebar. Phone and iPad portrait: a bottom drawer you can drag. -->
     <section class="drawer" id="drawer" data-state="peek" aria-label="Results">
       <div class="grab" id="grab">

@@ -6,7 +6,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |
     Designed for computer science graduates, this MSc deepens understanding of computer science theory and practice through research-led teaching of foundational and contemporary topics. Core modules cover advanced programming, machine learning and deep learning, network design and analysis, algorithms and complexity, and research ethics. Options include computer vision, natural language processing, quantum computing, and security engineering and cryptography. Students analyse complex problems and design and evaluate effective solutions through hands-on coding and software development, with potential industry co-supervision of their 60-credit research project.
   subjects: 
@@ -49,7 +49,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |
     Students develop a strong understanding of computer science theory and practice through research-led teaching across both foundational and contemporary topics, with five core modules covering programming, AI, algorithms, human-AI interaction, research methods and ethics.
     The programme develops skills in AI, critical thinking, problem-solving, hands-on coding and software development, while giving students opportunities to work on real-world scenarios and cutting-edge research problems in areas such as reinforcement learning, AI and human systems, and vision, imaging and visualisation.
@@ -96,7 +96,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |
     Students learn to write massively parallel code on Durham’s own computing cluster, analyse large scientific datasets, and explore stellar evolution, galaxy formation and the structure of the Universe. They investigate fundamental questions such as how large-scale surveys and supercomputer simulations can help us understand dark matter and dark energy.
     Led by the Department of Computer Science, the course brings together expertise from several specialist departments across Durham. This interdisciplinary approach gives students access to a wide range of academic expertise, facilities and equipment, while small cohorts and a research project provide valuable preparation for a PhD or a data-intensive career.
@@ -140,7 +140,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |
     This MSc combines financial mathematics with high-performance computing, scientific computing, machine learning and AI. Students study the mathematical principles behind modern financial markets while gaining hands-on experience with distributed ledgers, smart contracts and decentralised finance. They apply these skills to problems such as portfolio selection, risk management and derivative pricing, using Durham’s large-scale computing cluster. Unlike traditional financial mathematics degrees, the programme places a strong emphasis on computational and data-driven methods, preparing graduates for quantitative and technical roles in banks, asset management firms, trading companies, fintech organisations and other technology-led financial businesses.
   subjects: 
@@ -188,7 +188,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |
     This MSc explores how artificial intelligence enables machines to see, understand and interact with the world. Students study computer vision, deep learning, robotic planning and motion, and simultaneous localisation and mapping (SLAM), underpinned by machine learning, statistics and high-performance computing. They address challenges such as building future mobility solutions that combine autonomy with safety and reliability. Distinctively, every student receives their own robotics kit to build and maintain, gaining hands-on experience in perception, control and real-time decision-making in physical systems.
   
@@ -236,7 +236,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |
     This MSc combines advanced artificial intelligence with engineering applications, preparing students to design and deploy AI-driven solutions for complex engineering challenges. Core modules cover deep learning for engineering, optimisation and model predictive control, machine learning, statistics and high-performance computing. Students learn to integrate AI with physical models and engineering principles, apply deep learning to real-world systems, and develop robust software. Its strong engineering focus sets graduates apart in a competitive AI market, and projects can be completed with industry partners.
   subjects: 
@@ -283,7 +283,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |   
     This MSc combines advanced artificial intelligence with engineering applications, equipping students with the knowledge and skills to develop AI-driven solutions to complex real-world engineering challenges. Students will study deep learning, machine learning, optimisation, model predictive control, statistics and high-performance computing, while learning to integrate AI with physical models and engineering principles. Through practical projects, students will develop skills in computational analysis, software development and applying AI to real-world systems. The programme’s strong focus on engineering applications sets it apart from more general AI programmes, with opportunities to work on projects with industry partners.
   
@@ -332,7 +332,7 @@
   delivery: "On campus"
   duration: "1 year"
   dates: "September 2027"
-  deadline: ""
+  deadline: "To be confirmed"
   summary: |
     This MSc equips students with the knowledge and technical skills to design, operate and optimise the compute platforms powering today’s most advanced AI and simulation workloads. Students will study hardware architecture, software stacks, networking, system monitoring, performance optimisation, user management and data centre security and operations, alongside machine learning and high-performance computing. Through hands-on work in provisioning and monitoring, students tackle challenges including energy efficiency, code performance and system security. The programme’s rare combination of AI, high-performance computing and systems expertise prepares graduates to build and scale the infrastructure behind next-generation AI and supercomputing.
   subjects: 

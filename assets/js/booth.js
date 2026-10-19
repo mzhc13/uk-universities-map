@@ -207,18 +207,74 @@ function renderDetail(c) {
   const tg = h("div", "tags");
   [c.qualification, ...arr(c.study_mode), c.delivery !== "Other" ? c.delivery : ""].filter(Boolean).forEach((t, i) => tg.append(h("span", i ? "" : "q", t)));
   d.append(tg, h("h3", "", c.name));
-  (c.summary || "").split(/\n+/).filter(Boolean).forEach((p, i) => d.append(h("p", i ? "sum" : "sum lead", p)));
-  const f = h("dl", "facts");
-  [["Duration", c.duration], ["Starts", c.dates], ["Apply by", c.deadline]].forEach(([k, v]) => {
-    const x = h("div", tbc(v) ? "tbc" : ""); x.append(h("dt", "", k), h("dd", "", tbc(v) ? "To be confirmed" : v)); f.append(x);
+  (c.summary || "")
+  .trim()
+  .split(/\n\s*\n/)
+  .map(p => p.replace(/\n/g, " ").trim())
+  .filter(Boolean)
+  .forEach((p, i) => {
+    d.append(h("p", "sum lead", p));
   });
-  d.append(f);
+
+const f = h("dl", "facts");
+
+[["Duration", c.duration], ["Starts", c.dates], ["Apply by", c.deadline]].forEach(([k, v]) => {
+  const x = h("div", tbc(v) ? "tbc" : "");
+  const dd = h("dd");
+
+  if (tbc(v)) {
+    dd.textContent = "To be confirmed";
+  } else if (k === "Apply by") {
+    const blocks = String(v).trim().split(/\n\s*\n/).filter(Boolean);
+
+    blocks.forEach(block => {
+      const lines = block.split(/\n/).map(line => line.trim()).filter(Boolean);
+
+      if (lines.every(line => line.startsWith("- "))) {
+        const ul = h("ul", "deadline-list");
+        lines.forEach(line => {
+          ul.append(h("li", "", line.replace(/^-+\s*/, "")));
+        });
+        dd.append(ul);
+      } else {
+        dd.append(h("p", "", lines.join(" ")));
+      }
+    });
+  } else {
+    dd.textContent = v;
+  }
+
+  x.append(h("dt", "", k), dd);
+  f.append(x);
+});
+
+d.append(f);
+
   const main = h("div", "main"), aux = h("aside", "aux");
   if (arr(c.highlights).length) { const ul = h("ul", "hl"); c.highlights.forEach(i => ul.append(h("li", "", i))); main.append(sec("Highlights", ul)); }
-  [["How it is taught", c.delivery_note], ["Entry requirements", c.entry_requirements]].forEach(([k, v]) => {
-    if (!v) return; const t = h("div", "txt"); v.split(/\n+/).filter(Boolean).forEach(p => t.append(h("p", "", p))); main.append(sec(k, t));
-  });
-  [c.notes, c.programme_note].forEach(n => n && main.append(h("p", "note", n)));
+[["How it is taught", c.delivery_note], ["Entry requirements", c.entry_requirements]].forEach(([k, v]) => {
+  if (!v) return;
+
+  const t = h("div", "txt");
+
+  v.trim()
+    .split(/\n\s*\n/)
+    .map(p => p.replace(/\n/g, " ").trim())
+    .filter(Boolean)
+    .forEach(p => t.append(h("p", "", p)));
+
+  main.append(sec(k, t));
+});
+
+[c.notes, c.programme_note].forEach(n => {
+  if (!n) return;
+
+  n.trim()
+    .split(/\n\s*\n/)
+    .map(p => p.replace(/\n/g, " ").trim())
+    .filter(Boolean)
+    .forEach(p => main.append(h("p", "note", p)));
+});
 
   /* portrait: the first link plus Share become a sticky action bar, the rest move into a "More links" section */
   const portrait = portraitMQ.matches;
@@ -237,7 +293,9 @@ function renderDetail(c) {
   if (arr(c.careers).length) aux.append(sec("Career pathways", chips(c.careers)));
   if (extra.length) { const m = h("div", "morelinks"); m.append(...extra); aux.append(sec("More links", m)); }
   if (window.qrcode && !phone) try {
-    const w = h("div", "qr"); w.append(qrSvg(url), h("p", "", "Scan with your phone camera to open this programme."));
+    /* the QR opens the university's own programme page; only if there is none does it fall back to the department page, then the map link */
+    const qrUrl = [c.programme_url, c.department_url].find(u => /^https?:/.test(u || "")) || url;
+    const w = h("div", "qr"); w.append(qrSvg(qrUrl), h("p", "", "Scan with your phone camera to open the programme page."));
     aux.append(sec("Take it with you", w));
   } catch (e) {}
   const cols = h("div", "cols"); cols.append(main, aux); d.append(cols);
